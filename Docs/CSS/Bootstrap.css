@@ -23009,6 +23009,7 @@ span.product-remove:after {
 .iti__flag-box,
 .iti__country-name {
   margin-right: 6px;
+  color: black
 }
 .iti--allow-dropdown input,
 .iti--allow-dropdown input[type=text],
