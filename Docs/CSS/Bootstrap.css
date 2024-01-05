@@ -494,6 +494,12 @@ html [type="button"],
 [type="reset"],
 [type="submit"] {
   -webkit-appearance: button;
+  padding: 8px 40%;
+  border: beige;
+  border-radius: 30px;
+  background: yellow;
+  margin: 20px 0;
+  cursor: pointer
 }
 button::-moz-focus-inner,
 [type="button"]::-moz-focus-inner,

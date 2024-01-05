@@ -1,3 +1,47 @@
+<?php
+require '../../functions/connection.php';
+
+session_start();
+
+// افتراض أنك قد قمت بإعداد اتصال بقاعدة البيانات بالفعل
+// $conn = mysqli_connect("localhost", "اسم المستخدم", "كلمة المرور", "اسم_قاعدة_البيانات");
+
+if ($conn) {
+  // تحقق مما إذا كان المستخدم قد سجل دخوله
+  if (isset($_SESSION['id'])) {
+    $userId = $_SESSION['id'];
+
+    // تحقق من حالة التسجيل في قاعدة البيانات
+    $query = "SELECT user FROM create_user WHERE id = $userId";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+      $row = mysqli_fetch_assoc($result);
+
+      // إذا كان المستخدم قد سجل دخوله وهو مسجل، يعرض رسالة ويتوقف
+      if ($row['user'] == 1) {
+        echo "لقد سجلت دخولك بالفعل!";
+        exit;
+      }
+    } else {
+      // خطأ في استعلام قاعدة البيانات
+      echo "خطأ في استعلام قاعدة البيانات: " . mysqli_error($conn);
+      exit;
+    }
+  }
+
+  // استمرار عملية التسجيل...
+} else {
+  // خطأ في الاتصال بقاعدة البيانات
+  echo "خطأ في الاتصال بقاعدة البيانات: " . mysqli_connect_error();
+  exit;
+}
+
+// قم ببقية عملية التسجيل...
+?>
+
+
+
 <!DOCTYPE html>
 <html style="font-size: 16px;" lang="en">
 
@@ -50,7 +94,8 @@ Personalized Services">
 <!------------------------------- Body --------------------------------->
 <!---------------------------------------------------------------------->
 
-<body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en" style="background-color: #202047;">
+<body data-path-to-root="./" data-include-products="false" class="u-body u-xl-mode" data-lang="en"
+  style="background-color: #202047;">
 
   <!---------------------------------------------------------------------->
   <!--------------------------- Login Section ---------------------------->
@@ -90,7 +135,7 @@ Personalized Services">
                 <!---------------------------------------------------------------------->
                 <!------------------------------- Form --------------------------------->
                 <!---------------------------------------------------------------------->
-                
+
                 <form action="#" class="u-clearfix u-form-spacing-28 u-form-vertical u-inner-form" style="padding: 0px;"
                   source="email" name="form">
                   <div class="u-form-group u-form-name u-label-top">
@@ -118,7 +163,7 @@ Personalized Services">
               </div>
               <h6 class="u-align-center u-text u-text-3">
                 <a class="u-active-none u-border-none u-btn u-button-link u-button-style u-hover-none u-none u-text-custom-color-4 u-text-hover-palette-2-base u-btn-2"
-                  data-href="CreateAccount.html" href="CreateAccount.html"> Create account</a>
+                  data-href="CreateAccount.html" href="CreateAccount.php"> Create account</a>
               </h6>
               <h6 class="u-align-center u-text u-text-grey-25 u-text-4"> By creating an account you accept our<br>
               </h6>
